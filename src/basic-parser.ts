@@ -22,7 +22,6 @@ export async function parseCSV(path: string): Promise<string[][]> {
     input: fileStream,
     crlfDelay: Infinity, // handle different line endings
   });
-  
   // Create an empty array to hold the results
   let result = []
   
