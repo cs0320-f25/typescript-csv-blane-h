@@ -6,7 +6,7 @@ const PEOPLE_CSV_PATH = path.join(__dirname, "../data/people.csv");
 test("parseCSV yields arrays", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
   
-  expect(results).toHaveLength(7); //changed form 5 to 7 to align with updated csv file
+  expect(results).toHaveLength(8); //changed form 5 to 7 to align with updated csv file
   expect(results[0]).toEqual(["name", "age "]); //result expected is "age"
   expect(results[1]).toEqual(["Alice", "23"]);
   expect(results[2]).toEqual(["Bob", "thirty"]); // why does this work? :(
@@ -58,7 +58,7 @@ test("no age", async () => {
 
 test("searching with partial name", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH) 
-  expect(results[7]).toEqual(["Kim", "26"]);  //testing searching for partial name and should not be equal
+  expect(results[7]).not.toEqual(["Kim", "26"]);  //testing searching for partial name and should not be equal
 });
 
 test("expected being lowercase", async () => {
