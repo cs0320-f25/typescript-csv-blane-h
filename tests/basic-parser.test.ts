@@ -7,7 +7,7 @@ test("parseCSV yields arrays", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
   
   expect(results).toHaveLength(7); //changed form 5 to 7 to align with updated csv file
-  expect(results[0]).toEqual(["name", "age "]);
+  expect(results[0]).toEqual(["name", "age "]); //result expected is "age"
   expect(results[1]).toEqual(["Alice", "23"]);
   expect(results[2]).toEqual(["Bob", "thirty"]); // why does this work? :(
   expect(results[3]).toEqual(["Charlie", "25"]);
@@ -39,14 +39,14 @@ test("wrong row number that does not exist", async () => {
   expect(results[7]).not.toEqual(["Nim", "22"]); //testing wrong row number that does not exist should not be equal
 });
 
-test("double quotation", async () => {
+test("double quotation", async () => { //test checks if quotations from csv are excluded
   const results = await parseCSV(PEOPLE_CSV_PATH)
   expect(results[3]).toEqual(["Liya Johnson", "24"]);  //testing case with spacing grouped by quotation marks should be equal
 });
 
 test("no age", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[3]).toEqual(["Samara", null]);  //testing case with no age being defaulted to null should be equal
+  expect(results[6]).toEqual(["Samara", null]);  //testing case with no age being defaulted to null should be equal
 });
 
 test("age written as decimal", async () => {
