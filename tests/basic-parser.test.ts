@@ -14,6 +14,13 @@ test("parseCSV yields arrays", async () => {
   expect(results[4]).toEqual(["Nim", "22"]);
 });
 
+test("parseCSV yields only arrays", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH)
+  for(const row of results) {
+    expect(Array.isArray(row)).toBe(true);
+  }
+});
+
 test(" wrong name but correct age", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
   expect(results[1]).not.toEqual(["Ashley", "23"]); //testing wrong name but correct age should not be equal
@@ -40,7 +47,7 @@ test("wrong row number that does not exist", async () => {
 });
 
 test("double quotation", async () => { //test checks if quotations from csv are excluded
-  const results = await parseCSV(PEOPLE_CSV_PATH)
+  const results = await parseCSV(PEOPLE_CSV_PATH) //FAILS BUT SHOULD PASS
   expect(results[5]).toEqual(["Liya Johnson", "24"]);  //testing case with spacing grouped by quotation marks should be equal
 });
 
@@ -54,9 +61,8 @@ test("age written as decimal", async () => {
   expect(results[7]).toEqual(["Kimberly", "26"]);  //testing age written as decimal should be equal
 });
 
-test("parseCSV yields only arrays", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH)
-  for(const row of results) {
-    expect(Array.isArray(row)).toBe(true);
-  }
+test("searching with partial name", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH) 
+  expect(results[7]).toEqual(["Kim", "26"]);  //testing searching for partial name and should not be equal
 });
+
