@@ -52,7 +52,7 @@ test("double quotation", async () => { //test checks if quotations from csv are 
 });
 
 test("no age", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH)
+  const results = await parseCSV(PEOPLE_CSV_PATH) // test passes meaning the csv file counts this row as valid even the age is missing
   expect(results[6]).toEqual(["Samara", ]);  //testing case with no age being empty should be equal
 });
 
@@ -65,4 +65,10 @@ test("searching with partial name", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH) 
   expect(results[7]).toEqual(["Kim", "26"]);  //testing searching for partial name and should not be equal
 });
+
+test("expected being lowercase", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH) 
+  expect(results[3]).toEqual(["charlie", "25"]);  //testing if the csv parser is case sensitive
+});
+
 
