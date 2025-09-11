@@ -41,17 +41,17 @@ test("wrong row number that does not exist", async () => {
 
 test("double quotation", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[3]).not.toEqual(["Liya Johnson", "24"]);  //testing case with spacing grouped by quotation marks should be equal
+  expect(results[3]).toEqual(["Liya Johnson", "24"]);  //testing case with spacing grouped by quotation marks should be equal
 });
 
 test("no age", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[3]).not.toEqual(["Samara", null]);  //testing case with no age being defaulted to null should be equal
+  expect(results[3]).toEqual(["Samara", null]);  //testing case with no age being defaulted to null should be equal
 });
 
 test("age written as decimal", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[3]).not.toEqual(["Charlie", "27.0"]);  //testing age written as decimal should be equal
+  expect(results[3]).toEqual(["Charlie", "25.0"]);  //testing age written as decimal should be equal
 });
 
 test("parseCSV yields only arrays", async () => {
