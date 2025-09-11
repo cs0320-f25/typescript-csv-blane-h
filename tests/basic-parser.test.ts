@@ -33,7 +33,7 @@ test("wrong age but correct name", async () => {
 
 test("wrong age and wrong name", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[4]).not.toEqual(["Kim", "24"]);  //testing wrong age and name should not be equal
+  expect(results[4]).not.toEqual(["Sarah", "24"]);  //testing wrong age and name should not be equal
 });
 
 test("wrong row number", async () => {

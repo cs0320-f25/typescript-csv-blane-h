@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as readline from "readline";
+import { ZodType } from "zod";          // CHANGE: imported Zod
+
 
 /**
  * This is a JSDoc comment. Similar to JavaDoc, it documents a public-facing
@@ -14,7 +16,7 @@ import * as readline from "readline";
  * @param path The path to the file being loaded.
  * @returns a "promise" to produce a 2-d array of cell values
  */
-export async function parseCSV(path: string): Promise<string[][]> {
+export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise< T[] | string[][]> { //CHANGE: T represents the type of object, added ZopType<T>
   // This initial block of code reads from a file in Node.js. The "rl"
   // value can be iterated over in a "for" loop. 
   const fileStream = fs.createReadStream(path);
@@ -23,7 +25,7 @@ export async function parseCSV(path: string): Promise<string[][]> {
     crlfDelay: Infinity, // handle different line endings
   });
   // Create an empty array to hold the results
-  let result = []
+  let result: string[][] = [] //CHANGE: specify the type because the parser should fall back to its previous behavior
   
   // We add the "await" here because file I/O is asynchronous. 
   // We need to force TypeScript to _wait_ for a row before moving on. 
@@ -32,5 +34,16 @@ export async function parseCSV(path: string): Promise<string[][]> {
     const values = line.split(",").map((v) => v.trim());
     result.push(values)
   }
+    //CHANGE: create a block to validate and transform each CSV row via the given schema
+    if (schema) {
+    return result.map(row => {
+      const parsed = schema.safeParse(row);
+      if (!parsed.success) {
+        throw new Error(`Row validation failed: ${JSON.stringify(parsed.error.issues)}`);  //CHANGE: communicate the failure back to the caller by throwing an error
+      }
+      return parsed.data;
+    });
+  }
+
   return result
 }
