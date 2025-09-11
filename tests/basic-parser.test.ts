@@ -46,7 +46,7 @@ test("double quotation", async () => { //test checks if quotations from csv are 
 
 test("no age", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
-  expect(results[6]).toEqual(["Samara", ""]);  //testing case with no age being defaulted to null should be equal
+  expect(results[6]).toEqual(["Samara", ]);  //testing case with no age being empty should be equal
 });
 
 test("age written as decimal", async () => {
