@@ -88,26 +88,6 @@ test("age as an invalid string 2", async () => { //test for thirty
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[2] as any).error).toMatch(/Row validation failed/i); 
 })
-
-test(" wrong name but correct age 2", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[1] as any).error).toMatch(/Row validation failed/i); 
-});
-
-test("wrong age but correct name 2", async () => {
-    const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[3] as any).error).toMatch(/Row validation failed/i);  
-});
-
-test("wrong age and wrong name 2", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[4] as any).error).toMatch(/Row validation failed/i);  
-});
-
-test("wrong row number that does not exist 2", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[8] as any).error).toMatch(/Row validation failed/i);  
-
 test("double quotation 2", async () => { 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect(results[5]).toEqual(["Liya Johnson", "24"]);});  
