@@ -1,5 +1,7 @@
 import { parseCSV } from "../src/basic-parser";
 import * as path from "path";
+import { z } from "zod";  // CHANGE: import zod 
+
 
 const PEOPLE_CSV_PATH = path.join(__dirname, "../data/people.csv");
 
@@ -64,6 +66,39 @@ test("searching with partial name", async () => {
 test("expected being lowercase", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH) 
   expect(results[3]).toEqual(["charlie", "25"]);  //testing if the csv parser is case sensitive
+});
+
+const PersonSchema = z //Zod scheme built using the imported Zod library
+  .tuple([z.string(), z.coerce.number()]) //checking in first input is a string and second is a number
+  .transform(([name, age]) => ({ name, age }));  //tranforms rows into correct format
+
+test("testing header is invalid", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect(results[0]).toEqual({ name: "name", age: NaN }); //test should expect Nan because "age" is not a number and therefore invalid
+});
+
+test("correct age and number", async () => { //test method normally see if it retrieves correct age and number
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect(results[4]).toEqual({ name: "Nim", age: 22 }); 
+});
+
+test("age as an invalid string", async () => { //test for thirty 
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect(results[2]).toEqual({ name: "Bob", age: NaN }); }); //test should expect Nan because "thirty" is not a number and therefore invalid
+
+//REPEAT SAME TESTS 
+
+
+
+test("parseCSV throws error on invalid rows", async () => {
+  // Example: stricter schema where age must be a positive number
+  const StrictPersonSchema = z
+    .tuple([z.string(), z.number().positive()])
+    .transform(([name, age]) => ({ name, age }));
+
+  await expect(parseCSV(PEOPLE_CSV_PATH, StrictPersonSchema))
+    .rejects
+    .toThrow(/Row validation failed/);
 });
 
 
