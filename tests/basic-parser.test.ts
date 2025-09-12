@@ -73,7 +73,6 @@ const PersonSchema = z //Zod scheme built using the imported Zod library
   .tuple([z.string(), z.coerce.number()]) //checking in first input is a string and second is a number
   .transform(([name, age]) => ({ name, age }));  //tranforms rows into correct format
 
-
 test("testing header is invalid", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[0] as any).error).toMatch(/Row validation failed/i);  //test should expect Nan because "thirty" is not a number and therefore invalid
@@ -87,7 +86,8 @@ test("correct age and number 2", async () => { //test method normally see if it 
 test("age as an invalid string 2", async () => { //test for thirty 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[2] as any).error).toMatch(/Row validation failed/i); 
-})
+});
+
 test("double quotation 2", async () => { 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect(results[5]).toEqual(["Liya Johnson", "24"]);});  
@@ -104,6 +104,5 @@ test("searching with partial name 2", async () => {
 
 test("expected being lowercase 2", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema); 
-  expect(results[3]).toEqual(["charlie", "25"]);});
-
+  expect(results[3]).toEqual(["charlie", "25"]);
 });
