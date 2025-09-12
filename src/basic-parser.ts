@@ -16,7 +16,8 @@ import { ZodType } from "zod";          // CHANGE: imported Zod
  * @param path The path to the file being loaded.
  * @returns a "promise" to produce a 2-d array of cell values
  */
-export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise< T[] | string[][]> { //CHANGE: T represents the type of object, added ZopType<T>
+export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<string[][] | Array<T | { error: string; row: string[] }>>
+{ //CHANGE: T represents the type of object, added ZopType<T>
   // This initial block of code reads from a file in Node.js. The "rl"
   // value can be iterated over in a "for" loop. 
   const fileStream = fs.createReadStream(path);
@@ -35,15 +36,18 @@ export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise< 
     result.push(values)
   }
     //CHANGE: create a block to validate and transform each CSV row via the given schema
-    if (schema) {
-    return result.map(row => {
-      const parsed = schema.safeParse(row);
-      if (!parsed.success) {
-        throw new Error(`Row validation failed: ${JSON.stringify(parsed.error.issues)}`);  //CHANGE: communicate the failure back to the caller by throwing an error
-      }
-      return parsed.data;
-    });
-  }
+if (schema) {
+  return result.map(row => {
+    const parsed = schema.safeParse(row);
+    if (!parsed.success) {
+      return {
+        error: `Row validation failed: ${JSON.stringify(parsed.error.issues)}`, //returning an error if the row is invalid
+        row,
+      };
+    }
+    return parsed.data; //returning the data is the row is valid
+  });
+}
 
   return result
 }
