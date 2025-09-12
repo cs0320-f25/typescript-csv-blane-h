@@ -86,5 +86,44 @@ test("correct age and number", async () => { //test method normally see if it re
 
 test("age as an invalid string", async () => { //test for thirty 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[2] as any).error).toMatch(/Row validation failed/i);  //test should expect Nan because "thirty" is not a number and therefore invalid
+  expect((results[2] as any).error).toMatch(/Row validation failed/i); 
 })
+
+test(" wrong name but correct age", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[1] as any).error).toMatch(/Row validation failed/i); 
+});
+
+test("wrong age but correct name", async () => {
+    const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[3] as any).error).toMatch(/Row validation failed/i);  
+});
+
+test("wrong age and wrong name", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[4] as any).error).toMatch(/Row validation failed/i);  
+});
+
+test("wrong row number that does not exist", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[8] as any).error).toMatch(/Row validation failed/i);  
+
+test("double quotation", async () => { 
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect(results[5]).toEqual(["Liya Johnson", "24"]);});  
+
+test("no age", async () => {
+    const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[6] as any).error).toMatch(/Row validation failed/i); 
+});
+
+test("searching with partial name", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[7] as any).error).toMatch(/Row validation failed/i);  
+});
+
+test("expected being lowercase", async () => {
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema); 
+  expect(results[3]).toEqual(["charlie", "25"]);});
+
+});
