@@ -1,10 +1,17 @@
 import { parseCSV } from "./basic-parser";
+import { z } from "zod"; 
 
 /*
   Example of how to run the parser outside of a test suite.
 */
 
-const DATA_FILE = "./data/people.csv"; // update with your actual file name
+const PersonSchema = z                         //CHANGE
+  .tuple([z.string(), z.coerce.number()])
+  .transform(([name, age]) => ({ name, age }));
+
+type Person = z.infer<typeof PersonSchema>;
+
+const DATA_FILE = "./data/people.csv"; // CHANGE
 
 async function main() {
   // Because the parseCSV function needs to "await" data, we need to do the same here.
