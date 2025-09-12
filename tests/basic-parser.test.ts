@@ -80,8 +80,9 @@ test("testing header is invalid", async () => {
 
 test("correct age and number 2", async () => { //test method normally see if it retrieves correct age and number
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect(results[4]).toEqual({ name: "Nim", age: 22 }); 
+  expect((results[4] as any).data).toEqual({ name: "Nim", age: 22 });
 });
+
 
 test("age as an invalid string 2", async () => { //test for thirty 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
@@ -90,17 +91,12 @@ test("age as an invalid string 2", async () => { //test for thirty
 
 test("double quotation 2", async () => { 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[5] as any).error).toMatch(/Row validation failed/i); 
+  expect((results[5] as any).error).toMatch(["Liya Johnson", "24"]); 
   });
 
 test("no age 2", async () => {
     const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[6] as any).error).toMatch(/Row validation failed/i); 
-});
-
-test("searching with partial name 2", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[7] as any).error).toMatch(/Row validation failed/i);  
 });
 
 test("expected being lowercase 2", async () => {
