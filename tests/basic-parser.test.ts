@@ -122,5 +122,5 @@ test("double quotation 3", async () => {
 
 test("no age 3", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[8] as any).error).toMatch(/Invalid row/i); // expects error for missing age
+  expect((results[7] as any).error).toMatch(/Invalid row/i); // expects error for missing age
 });
