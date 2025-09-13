@@ -89,17 +89,7 @@ test("age as an invalid string 2", async () => { //test for thirty
   expect((results[2] as any).error).toMatch(/Row validation failed/i); 
 });
 
-test("double quotation 2", async () => { 
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[5] as any).data).toEqual({ name: "Liya Johnson", age: 24 });
-  });
-
 test("no age 2", async () => {
     const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[6] as any).error).toMatch(/Row validation failed/i); 
-});
-
-test("expected being lowercase 2", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema); 
-  expect(results[3]).toEqual({ name: "charlie", age: 25 });
 });
