@@ -107,7 +107,7 @@ test("testing header is invalid 2", async () => {
 
 test("correct age and major", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[4] as any).data).toEqual({ name: "Nim", age: 22, major: "Engineering" }); // checks row with valid age and major
+  expect((results[4] as any).data).toEqual({ name: "Nim",  major: "Engineering", age: 22, }); // checks row with valid age and major
 });
 
 test("age as invalid string 3", async () => { 
@@ -117,7 +117,7 @@ test("age as invalid string 3", async () => {
 
 test("double quotation 3", async () => {  
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[5] as any).data).toEqual({ name: "Liya Johnson", age: 26, major: "Biology" }); // tests name with quotes
+  expect((results[5] as any).data).toEqual({ name: "Liya Johnson", major: "Biology", age: 26, }); // tests name with quotes
 });
 
 test("no age 3", async () => { 
