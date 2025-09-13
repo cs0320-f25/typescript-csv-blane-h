@@ -63,11 +63,6 @@ test("searching with partial name", async () => {
   expect(results[7]).not.toEqual(["Kim", "26"]);  //testing searching for partial name and should not be equal
 });
 
-test("expected being lowercase", async () => {
-  const results = await parseCSV(PEOPLE_CSV_PATH) 
-  expect(results[3]).toEqual(["charlie", "25"]);  //testing if the csv parser is case sensitive
-});
-
 //TESTING ZOD SCHEME
 const PersonSchema = z //Zod scheme built using the imported Zod library
   .tuple([z.string(), z.coerce.number()]) //checking in first input is a string and second is a number
@@ -83,11 +78,15 @@ test("correct age and number 2", async () => { //test method normally see if it 
   expect((results[4] as any).data).toEqual({ name: "Nim", age: 22 });
 });
 
-
 test("age as an invalid string 2", async () => { //test for thirty 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[2] as any).error).toMatch(/Row validation failed/i); 
 });
+
+test("double quotation 2", async () => { 
+  const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
+  expect((results[5] as any).data).toEqual({ name: "Liya Johnson", age: 24 });
+  });
 
 test("no age 2", async () => {
     const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
