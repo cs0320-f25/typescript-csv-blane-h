@@ -91,7 +91,7 @@ test("age as an invalid string 2", async () => { //test for thirty
 
 test("double quotation 2", async () => { 
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[4] as any).data).toEqual({ name: "Liya Johnson", age: 24 });
+  expect((results[5] as any).data).toEqual({ name: "Liya Johnson", age: 24 });
   });
 
 test("no age 2", async () => {
