@@ -11,8 +11,8 @@ const PersonSchema = z
 type Person = z.infer<typeof PersonSchema>;
 
 const StudentSchema = z
-  .tuple([z.string(), z.coerce.number()])
-  .transform(([name, age]) => ({ name, age }));
+  .tuple([z.string(), z.string(), z.coerce.number()])
+  .transform(([name, major, age]) => ({ name, major, age }));
 
 type Student = z.infer<typeof StudentSchema>;
 

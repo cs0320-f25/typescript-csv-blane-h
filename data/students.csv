@@ -1,8 +1,8 @@
 name,major
-Alice,CS
-Bob,Math
-Charlie,Physics!
-Nim,Engineering 2
-"Liya Johnson",Biology
+Alice,CS,23
+Bob,Math,22
+Charlie,Physics!,28
+Nim,27
+"Liya Johnson",Biology, 26
 Samara,Chemistry
-Kimberly,CS
+Kimberly,CS,17
