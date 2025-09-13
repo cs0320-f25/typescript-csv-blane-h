@@ -107,12 +107,12 @@ test("testing header is invalid 2", async () => {
 
 test("correct age and major", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[3] as any).data).toEqual({ name: "Nim", age: 22, major: "Engineering 2" }); // checks row with valid age and major
+  expect((results[6] as any).data).toEqual({ name: "Nim", age: 22, major: "Engineering" }); // checks row with valid age and major
 });
 
 test("age as invalid string 3", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[2] as any).error).toMatch(/Invalid row/i); // expects an error because age is not a number
+  expect((results[7] as any).error).toMatch(/Invalid row/i); // expects an error because age is not a number
 });
 
 test("double quotation 3", async () => {  
@@ -122,5 +122,5 @@ test("double quotation 3", async () => {
 
 test("no age 3", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[5] as any).error).toMatch(/Invalid row/i); // expects error for missing age
+  expect((results[8] as any).error).toMatch(/Invalid row/i); // expects error for missing age
 });
