@@ -63,11 +63,7 @@ Include your notes from above: what were your initial ideas, what did the LLM su
 I brainstormed some functionality enhancements like specifying input type (age as word or number) and clarifying formatting rules like spacing between commas. For extensibility, I thought of throwing errors if a row is invalid due to formatting or missing fields. The LLM overlapped with me on things like missing columns, input type, and schema mismatches. It also pointed out concerns like skipping headers and empty rows these suggestions resonated with me because it would make parsing more efficient, also trimming spaces which would prevent mismatches. One thing that the LLM suggested that did not resonate with me was using different delimiters because that would not effect the efficiency of the parser or the functionality. Overall, responses of the different LLMS were similar in suggestions and quantity, but differed in grouping, listing style, and one response included a sample CSV code example.
 
 ### Design Choices
-
-Explain the decisions you made about the high level design of your program
-Explain the relationships between classes/interfaces.
-Discuss any specific data structures you used, why you created it, and other high level explanations.
-
+I used one function to call on different test files in my design to make it more succint, and used an array to hold the values of the inputted data.
 
 ### 1340 Supplement
 
@@ -87,16 +83,14 @@ N/A
 The tests I wrote cover different cases to make sure the parser is doing what it should for both the Person and Student Schemas. I tested when only the age is correct, when only the partial name is searched for, when only the name is correct, and when both are wrong, just to check that the parser is not mismatching the rows and can recognize they are not equal. I also tested row numbers, like when the wrong row gets picked or when the row number goes past the number of rows in the CSV, to make sure the rows were not being mismatched. I also tried testing more special cases too, like values in double quotations, no age being inputted, or the age written as a string, to make sure these rows were still being marked as invalid. The double quotation was marked as invalid but in the future I would get to improve the parser to recognize it is still valid. I also tested to see if the header itself was invalid. For now it should be because the age is a string but I also want to enhance the parser to skip the header.
 
 #### How To…
-Run the tests you wrote/were provided
-
 To run tests I was provided and wrote I initially simply did a npm test to see which ones the parser counted as valid versus invalid. For the tests I wrote later on the schemas I created myself I used the updated parser function tested that. To build and run my program simply use the npm commands, specifically npm test to test the functions of my program.
 
 #### Team members and contributions (include cs logins):
 N/A
 
 #### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-vchu6
-zplunket
+vchu6, discussed test cases
+zplunket, dicussed implementation of parser function
 I utilized generative AI to help me understand the logic of Zod schema and how to import Zod to parse and handle in/valid rows, 
 I also used it to help handle multiple types of schemas.
 
