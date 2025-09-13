@@ -48,6 +48,7 @@ export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<s
       } else {
         // if row is invalid then return an error object
         return {
+          data: row,
           error: `Invalid row ${JSON.stringify(parsed.error.issues)}`,
           row, //continue rows
         };
