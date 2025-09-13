@@ -95,7 +95,7 @@ test("no age 2", async () => { //should expect an error because no number in inp
 
 //TESTING ZOD SCHEME FOR STUDENTS
 const StudentSchema = z
-  .tuple([z.string(), z.coerce.string(), z.number()]) // first input string, second number, third string
+  .tuple([z.string(), z.string(), z.coerce.number()]) // first input string, second number, third string
   .transform(([name, major, age]) => ({ name, major, age })); // transforms rows into object format
 
 const STUDENT_CSV_PATH = "./data/students.csv"; // path to your student CSV file
@@ -105,7 +105,7 @@ test("testing header is invalid 2", async () => {
   expect((results[0] as any).error).toMatch(/Invalid row/i); // header is not a valid student row
 });
 
-test("correct age and major", async () => { 
+test("correct, name, age and major", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
   expect((results[4] as any).data).toEqual({ name: "Nim",  major: "Engineering", age: 22, }); // checks row with valid age and major
 });
