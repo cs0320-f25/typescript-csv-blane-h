@@ -37,21 +37,23 @@ export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<s
   }
     //create a block to validate and transform each CSV row via the given schema
 
-if (schema) { 
-  return result.map(row => {
-    const parsed = schema.safeParse(row); 
-    if (parsed.success) {
-      // if row is valid then return the parsed data
-      return { data: parsed.data };
-    } else {
-      // if row is invalid then return an error object
-      return {
-        error: `Invalid row ${JSON.stringify(parsed.error.issues)}`,
-        row, //continue rows
-      };
-    }
-  });
-}
+
+  //create a block to validate and transform each CSV row via the given schema
+  if (schema) { 
+    return result.map(row => {
+      const parsed = schema.safeParse(row); 
+      if (parsed.success) {
+        // if row is valid then return the parsed data
+        return { data: parsed.data };
+      } else {
+        // if row is invalid then return an error object
+        return {
+          error: `Invalid row ${JSON.stringify(parsed.error.issues)}`,
+          row, //continue rows
+        };
+      }
+    });
+  }
  
   return result
 }
