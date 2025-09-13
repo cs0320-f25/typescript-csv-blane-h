@@ -107,7 +107,7 @@ test("testing header is invalid 2", async () => {
 
 test("correct age and major", async () => { 
   const results = await parseCSV(STUDENT_CSV_PATH, StudentSchema);
-  expect((results[6] as any).data).toEqual({ name: "Nim", age: 22, major: "Engineering" }); // checks row with valid age and major
+  expect((results[4] as any).data).toEqual({ name: "Nim", age: 22, major: "Engineering" }); // checks row with valid age and major
 });
 
 test("age as invalid string 3", async () => { 
