@@ -95,7 +95,7 @@ test("no age 2", async () => { //should expect an error because no number in inp
 
 //TESTING ZOD SCHEME FOR STUDENTS
 const StudentSchema = z
-  .tuple([z.string(), z.coerce.number(), z.string()]) // first input string, second number, third string
+  .tuple([z.string(), z.coerce.string(), z.number()]) // first input string, second number, third string
   .transform(([name, major, age]) => ({ name, major, age })); // transforms rows into object format
 
 const STUDENT_CSV_PATH = "./data/students.csv"; // path to your student CSV file
