@@ -17,7 +17,7 @@ import { ZodType } from "zod";          // CHANGE: imported Zod
  * @returns a "promise" to produce a 2-d array of cell values
  */
 export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<string[][] | Array<{ data: T } | { error: string; row: string[] }>>
-{ //CHANGE: T represents the type of object, added ZopType<T>
+{ //T represents the type of object, added ZopType<T>
   // This initial block of code reads from a file in Node.js. The "rl"
   // value can be iterated over in a "for" loop. 
   const fileStream = fs.createReadStream(path);
@@ -26,7 +26,7 @@ export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<s
     crlfDelay: Infinity, // handle different line endings
   });
   // Create an empty array to hold the results
-  let result: string[][] = [] //CHANGE: specify the type because the parser should fall back to its previous behavior
+  let result: string[][] = [] //specify the type because the parser should fall back to its previous behavior
   
   // We add the "await" here because file I/O is asynchronous. 
   // We need to force TypeScript to _wait_ for a row before moving on. 
@@ -35,23 +35,23 @@ export async function parseCSV<T> (path: string, schema?: ZodType<T>): Promise<s
     const values = line.split(",").map((v) => v.trim());
     result.push(values)
   }
-    //CHANGE: create a block to validate and transform each CSV row via the given schema
+    //create a block to validate and transform each CSV row via the given schema
 
-if (schema) {
+if (schema) { 
   return result.map(row => {
-    const parsed = schema.safeParse(row);
+    const parsed = schema.safeParse(row); 
     if (parsed.success) {
-      // row is valid
+      // if row is valid then return the parsed data
       return { data: parsed.data };
     } else {
-      // row is invalid
+      // if row is invalid then return an error object
       return {
-        error: `Row validation failed: ${JSON.stringify(parsed.error.issues)}`,
-        row,
+        error: `Invalid row ${JSON.stringify(parsed.error.issues)}`,
+        row, //continue rows
       };
     }
   });
 }
-
+ 
   return result
 }

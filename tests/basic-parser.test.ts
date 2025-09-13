@@ -8,7 +8,7 @@ const PEOPLE_CSV_PATH = path.join(__dirname, "../data/people.csv");
 test("parseCSV yields arrays", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
   
-  expect(results).toHaveLength(8); //changed form 5 to 7 to align with updated csv file
+  expect(results).toHaveLength(8); //changed form 5 to 8 to align with updated csv file
   expect(results[0]).toEqual(["name", "age "]); //result expected is "age"
   expect(results[1]).toEqual(["Alice", "23"]);
   expect(results[2]).toEqual(["Bob", "thirty"]); // why does this work? :(
@@ -23,7 +23,7 @@ test("parseCSV yields only arrays", async () => {
   }
 });
 
-test(" wrong name but correct age", async () => {
+test("wrong name but correct age", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
   expect(results[1]).not.toEqual(["Ashley", "23"]); //testing wrong name but correct age should not be equal
 });
@@ -68,9 +68,13 @@ const PersonSchema = z //Zod scheme built using the imported Zod library
   .tuple([z.string(), z.coerce.number()]) //checking in first input is a string and second is a number
   .transform(([name, age]) => ({ name, age }));  //tranforms rows into correct format
 
+const StudentSchema = z
+  .tuple([z.string(), z.coerce.number(), z.string()])
+  .transform(([name, age, major]) => ({ name, age, major }));
+
 test("testing header is invalid", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[0] as any).error).toMatch(/Row validation failed/i);  //test should expect Nan because "thirty" is not a number and therefore invalid
+  expect((results[0] as any).error).toMatch(/Invalid row/i);  //test should expect Nan because "thirty" is not a number and therefore invalid
 });
 
 test("correct age and number 2", async () => { //test method normally see if it retrieves correct age and number
@@ -78,17 +82,17 @@ test("correct age and number 2", async () => { //test method normally see if it 
   expect((results[4] as any).data).toEqual({ name: "Nim", age: 22 });
 });
 
-test("age as an invalid string 2", async () => { //test for thirty 
+test("age as an invalid string 2", async () => { //should expect an error because "thirty" is not a number and therefore invalid
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[2] as any).error).toMatch(/Row validation failed/i); 
+  expect((results[2] as any).error).toMatch(/Invalid row/i); 
 });
 
-test("double quotation 2", async () => { 
+test("double quotation 2", async () => {  //testing how the parser handles names with double quotation
   const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
   expect((results[5] as any).data).toEqual({ name: "Liya Johnson", age: 24 });
   });
 
-test("no age 2", async () => {
+test("no age 2", async () => { //should expect an error because no number in inputted
     const results = await parseCSV(PEOPLE_CSV_PATH, PersonSchema);
-  expect((results[6] as any).error).toMatch(/Row validation failed/i); 
+  expect((results[6] as any).error).toMatch(/Invalid row/i); 
 });
