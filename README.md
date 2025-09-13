@@ -84,23 +84,23 @@ This sprint differed from prior programming assingments I have done because I wa
 N/A
 
 #### Tests: 
-The tests I wrote cover different cases to make sure the parser is doing what it should. I tested when only the age is correct, when only the partial name is searched for, when only the name is correct, and when both are wrong, just to check that the parser is not mismatching the rows and can recognize they are not equal. I also tested row numbers, like when the wrong row gets picked or when the row number goes past the number of rows in the CSV, to make sure the rows were not being mismatched. I also tried testing more special cases too, like values in double quotations, no age being inputted, or the age written as a string, to make sure these rows were still being marked as invalid. The double quotation was marked as invalid but in the future I would get to improve the parser to recognize it is still valid. I also tested to see if the header itself was invalid. For now it should be because the age is a string but I also want to enhance the parser to skip the header.
+The tests I wrote cover different cases to make sure the parser is doing what it should for borth the Person and Student Schemas. I tested when only the age is correct, when only the partial name is searched for, when only the name is correct, and when both are wrong, just to check that the parser is not mismatching the rows and can recognize they are not equal. I also tested row numbers, like when the wrong row gets picked or when the row number goes past the number of rows in the CSV, to make sure the rows were not being mismatched. I also tried testing more special cases too, like values in double quotations, no age being inputted, or the age written as a string, to make sure these rows were still being marked as invalid. The double quotation was marked as invalid but in the future I would get to improve the parser to recognize it is still valid. I also tested to see if the header itself was invalid. For now it should be because the age is a string but I also want to enhance the parser to skip the header.
 
 #### How To…
 Run the tests you wrote/were provided
 
-To run tests I was provided and wrote I initially simply did a npm test to see which ones the parser counted as valid versus invalid. For the tests I wrote later on the schemas I created myself
-
-Build and run your program
+To run tests I was provided and wrote I initially simply did a npm test to see which ones the parser counted as valid versus invalid. For the tests I wrote later on the schemas I created myself I used the updated parser function tested that. To build and run my program simply use the npm commands, specfically npm test to test the functions of my program.
 
 #### Team members and contributions (include cs logins):
-
+N/A
 
 #### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-
+vchu6
+zplunket
 
 #### Total estimated time it took to complete project:
 6 hours
 
 #### Link to GitHub Repo:  
+https://github.com/cs0320-f25/typescript-csv-blane-h.git
 
